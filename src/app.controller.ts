@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
-import { MessagePattern } from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -8,6 +8,12 @@ export class AppController {
 
   @MessagePattern('sum')
   sum(numArr: number[]): number {
+    console.log('Received numbers:', numArr);
     return numArr.reduce((a, b) => a + b, 0);
+  }
+
+  @EventPattern('log')
+  logEvent(data: any) {
+    console.log('Received log event:', data);
   }
 }
